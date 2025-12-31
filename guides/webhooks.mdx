@@ -1,0 +1,43 @@
+---
+title: Webhooks
+description: Set up real-time notifications for booking events, call completions, and more
+---
+
+# Webhooks
+
+Webhooks allow you to receive real-time HTTP notifications when events occur in your Skaala account.
+
+<Info>
+  **Coming Soon**: Detailed webhook documentation is being prepared. For now, check the API Reference for webhook endpoints.
+</Info>
+
+## Quick Start
+
+```bash
+curl -X POST https://www.skaala.ai/api/v1/webhooks \
+  -H "X-API-Key: sk_live_..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://your-app.com/webhooks/skaala",
+    "events": ["booking.created", "booking.cancelled"]
+  }'
+```
+
+## Available Events
+
+- `booking.created` - New booking created
+- `booking.updated` - Booking modified
+- `booking.cancelled` - Booking cancelled
+- `call.completed` - Call finished
+- `contact.created` - New contact added
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="book" href="/api-reference/webhooks/create-webhooks">
+    View webhook endpoints
+  </Card>
+  <Card title="Security" icon="shield" href="/guides/webhooks#security">
+    Verify webhook signatures
+  </Card>
+</CardGroup>

@@ -1,0 +1,157 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Skaala API",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg",
+    "href": "https://www.skaala.ai"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#6366F1",
+    "light": "#818CF8",
+    "dark": "#4F46E5",
+    "background": {
+      "dark": "#0F172A",
+      "light": "#FFFFFF"
+    }
+  },
+  "topbarCtaButton": {
+    "type": "github",
+    "url": "https://github.com/skaala-ai"
+  },
+  "topbarLinks": [
+    {
+      "name": "Get API Key",
+      "url": "https://www.skaala.ai/dashboard/settings/api-keys"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    },
+    {
+      "name": "Guides",
+      "url": "guides"
+    },
+    {
+      "name": "Integrations",
+      "url": "integrations"
+    }
+  ],
+  "api": {
+    "baseUrl": "https://www.skaala.ai/api",
+    "auth": {
+      "method": "key",
+      "name": "X-API-Key",
+      "inputPrefix": "sk_live_"
+    },
+    "playground": {
+      "mode": "show"
+    },
+    "maintainOrder": true
+  },
+  "openapi": "openapi.json",
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "getting-started/introduction",
+        "getting-started/quickstart",
+        "getting-started/authentication",
+        "getting-started/sdk-installation"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "guides/webhooks",
+        "guides/rate-limits",
+        "guides/errors",
+        "guides/pagination"
+      ]
+    },
+    {
+      "group": "Use Cases",
+      "pages": [
+        "guides/use-cases/booking-flow",
+        "guides/use-cases/agent-configuration",
+        "guides/use-cases/call-handling"
+      ]
+    },
+    {
+      "group": "Bookings",
+      "pages": [
+        "api-reference/bookings/list-bookings",
+        "api-reference/bookings/create-bookings",
+        "api-reference/bookings/get-bookings-by-id",
+        "api-reference/bookings/update-bookings-by-id",
+        "api-reference/bookings/create-bookings-by-id-cancel"
+      ]
+    },
+    {
+      "group": "Contacts",
+      "pages": [
+        "api-reference/contacts/list-contacts",
+        "api-reference/contacts/create-contacts",
+        "api-reference/contacts/get-contacts-by-id",
+        "api-reference/contacts/update-contacts-by-id"
+      ]
+    },
+    {
+      "group": "Calls",
+      "pages": [
+        "api-reference/calls/list-calls",
+        "api-reference/calls/get-calls-by-id"
+      ]
+    },
+    {
+      "group": "Services",
+      "pages": [
+        "api-reference/services/list-services"
+      ]
+    },
+    {
+      "group": "Webhooks",
+      "pages": [
+        "api-reference/webhooks/list-webhooks",
+        "api-reference/webhooks/create-webhooks",
+        "api-reference/webhooks/get-webhooks-by-id",
+        "api-reference/webhooks/delete-webhooks-by-id",
+        "api-reference/webhooks/list-webhooks-events"
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/elevenlabs",
+        "integrations/twilio",
+        "integrations/stripe",
+        "integrations/zapier"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "github": "https://github.com/skaala-ai",
+    "twitter": "https://twitter.com/skaala_ai",
+    "linkedin": "https://www.linkedin.com/company/skaala-ai"
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
+  "search": {
+    "prompt": "Search Skaala API documentation..."
+  },
+  "seo": {
+    "indexHiddenPages": false
+  },
+  "redirects": [],
+  "analytics": {
+    "ga4": {
+      "measurementId": "G-XXXXXXXXXX"
+    }
+  }
+}

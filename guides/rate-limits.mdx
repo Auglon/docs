@@ -1,0 +1,38 @@
+---
+title: Rate Limits
+description: Understanding Skaala API rate limits and best practices
+---
+
+# Rate Limits
+
+The Skaala API implements rate limiting to ensure fair usage and system stability.
+
+<Info>
+  **Current Limits**: 100 requests per minute per API key
+</Info>
+
+## Rate Limit Headers
+
+Every API response includes rate limit information:
+
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1704067200
+```
+
+## Handling Rate Limits
+
+When you exceed the rate limit, you'll receive a `429 Too Many Requests` response:
+
+```json
+{
+  "error": "rate_limit_exceeded",
+  "message": "Rate limit exceeded. Try again in 42 seconds.",
+  "retry_after": 42
+}
+```
+
+<Tip>
+  Implement exponential backoff when you receive a 429 response.
+</Tip>

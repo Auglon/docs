@@ -1,0 +1,225 @@
+---
+title: SDK Installation
+description: Install and configure Skaala SDKs for your preferred language
+---
+
+# SDK Installation
+
+Skaala provides official SDKs to make integration easier. Choose your language below:
+
+<Info>
+  **Coming Soon**: Official SDKs are currently in development. For now, use the REST API directly with your preferred HTTP client.
+</Info>
+
+## Available SDKs
+
+<CardGroup cols={3}>
+  <Card title="JavaScript/TypeScript" icon="js" color="#f7df1e">
+    **Status**: Coming Q1 2025
+
+    Features:
+    - Type-safe API client
+    - Webhook verification
+    - React hooks
+  </Card>
+
+  <Card title="Python" icon="python" color="#3776ab">
+    **Status**: Coming Q1 2025
+
+    Features:
+    - Async/await support
+    - Pydantic models
+    - Django integration
+  </Card>
+
+  <Card title="PHP" icon="php" color="#777bb4">
+    **Status**: Coming Q2 2025
+
+    Features:
+    - PSR-7 compatible
+    - Laravel package
+    - Symfony bundle
+  </Card>
+</CardGroup>
+
+## Using the REST API Directly
+
+Until official SDKs are available, you can use the REST API with your favorite HTTP client:
+
+<Tabs>
+  <Tab title="JavaScript/TypeScript">
+    ```typescript
+    // Using fetch (built-in)
+    const SKAALA_API_KEY = process.env.SKAALA_API_KEY;
+    const BASE_URL = 'https://www.skaala.ai/api';
+
+    async function listBookings() {
+      const response = await fetch(`${BASE_URL}/v1/bookings`, {
+        headers: {
+          'Authorization': `Bearer ${SKAALA_API_KEY}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      return await response.json();
+    }
+
+    // Usage
+    const { data, meta } = await listBookings();
+    console.log(`Found ${meta.total} bookings`);
+    ```
+
+    **Recommended clients:**
+    - `fetch` (built-in in Node 18+)
+    - `axios` - Feature-rich HTTP client
+    - `ky` - Modern fetch wrapper
+  </Tab>
+
+  <Tab title="Python">
+    ```python
+    import requests
+    import os
+
+    SKAALA_API_KEY = os.environ['SKAALA_API_KEY']
+    BASE_URL = 'https://www.skaala.ai/api'
+
+    def list_bookings():
+        response = requests.get(
+            f'{BASE_URL}/v1/bookings',
+            headers={'Authorization': f'Bearer {SKAALA_API_KEY}'}
+        )
+        response.raise_for_status()
+        return response.json()
+
+    # Usage
+    result = list_bookings()
+    print(f"Found {result['meta']['total']} bookings")
+    ```
+
+    **Recommended clients:**
+    - `requests` - Simple HTTP library
+    - `httpx` - Async-capable client
+    - `aiohttp` - Async HTTP client
+  </Tab>
+
+  <Tab title="PHP">
+    ```php
+    <?php
+    require 'vendor/autoload.php';
+
+    use GuzzleHttp\Client;
+
+    $apiKey = getenv('SKAALA_API_KEY');
+    $baseUrl = 'https://www.skaala.ai/api';
+
+    $client = new Client([
+        'base_uri' => $baseUrl,
+        'headers' => [
+            'Authorization' => 'Bearer ' . $apiKey
+        ]
+    ]);
+
+    $response = $client->get('/v1/bookings');
+    $data = json_decode($response->getBody(), true);
+
+    echo "Found {$data['meta']['total']} bookings\n";
+    ?>
+    ```
+
+    **Recommended clients:**
+    - `guzzlehttp/guzzle` - Full-featured HTTP client
+    - `symfony/http-client` - Symfony's HTTP client
+  </Tab>
+</Tabs>
+
+## Code Generators
+
+Generate type-safe clients from our OpenAPI specification:
+
+<CardGroup cols={2}>
+  <Card title="OpenAPI Generator" icon="code">
+    Generate clients in 50+ languages from our OpenAPI spec:
+
+    ```bash
+    openapi-generator-cli generate \
+      -i https://www.skaala.ai/api-docs/openapi.json \
+      -g typescript-fetch \
+      -o ./skaala-client
+    ```
+  </Card>
+
+  <Card title="Swagger Codegen" icon="file-code">
+    Alternative code generator:
+
+    ```bash
+    swagger-codegen generate \
+      -i https://www.skaala.ai/api-docs/openapi.json \
+      -l typescript-fetch \
+      -o ./skaala-client
+    ```
+  </Card>
+</CardGroup>
+
+## Environment Setup
+
+Store your API key securely using environment variables:
+
+<Tabs>
+  <Tab title=".env File">
+    ```bash .env
+    SKAALA_API_KEY=sk_live_your_key_here
+    SKAALA_BASE_URL=https://www.skaala.ai/api
+    ```
+
+    <Warning>
+      Add `.env` to your `.gitignore` to prevent committing secrets!
+    </Warning>
+  </Tab>
+
+  <Tab title="Vercel">
+    ```bash
+    # Add via Vercel CLI
+    vercel env add SKAALA_API_KEY
+
+    # Or via Vercel Dashboard:
+    # Settings → Environment Variables
+    ```
+  </Tab>
+
+  <Tab title="GitHub Actions">
+    ```yaml .github/workflows/deploy.yml
+    env:
+      SKAALA_API_KEY: ${{ secrets.SKAALA_API_KEY }}
+    ```
+
+    Add secrets via **Settings** → **Secrets and variables** → **Actions**
+  </Tab>
+</Tabs>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/getting-started/authentication">
+    Learn about API keys and scopes
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/getting-started/quickstart">
+    Make your first API call
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference/bookings/list-bookings">
+    Explore all endpoints
+  </Card>
+  <Card title="OpenAPI Spec" icon="file-code" href="https://www.skaala.ai/api-docs/openapi.json">
+    Download OpenAPI specification
+  </Card>
+</CardGroup>
+
+## Subscribe for SDK Updates
+
+Want to be notified when official SDKs are released?
+
+<Info>
+  Email support@skaala.ai with subject "SDK Notifications" and your preferred language(s).
+</Info>

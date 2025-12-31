@@ -1,0 +1,202 @@
+---
+title: Stripe Integration
+description: Payment processing and subscription management
+---
+
+# Stripe Integration
+
+Skaala uses Stripe for secure payment processing, subscription management, and billing.
+
+<Info>
+Stripe handles all payment data securely. Skaala never stores credit card information.
+</Info>
+
+## Subscription Plans
+
+### Available Plans
+
+<Tabs>
+  <Tab title="Starter">
+    **Free Trial (14 days)**
+
+    - 100 minutes of AI calls
+    - 1 phone number
+    - Basic analytics
+    - Email support
+  </Tab>
+
+  <Tab title="Professional">
+    **299 SEK/month**
+
+    - 500 minutes of AI calls
+    - 3 phone numbers
+    - Advanced analytics
+    - Priority support
+    - Custom voice training
+  </Tab>
+
+  <Tab title="Enterprise">
+    **Custom pricing**
+
+    - Unlimited minutes
+    - Unlimited phone numbers
+    - Dedicated account manager
+    - Custom integrations
+    - SLA guarantee
+  </Tab>
+</Tabs>
+
+### Usage-Based Billing
+
+Additional usage beyond plan limits:
+
+| Item | Price |
+|------|-------|
+| AI call minutes | 1.50 SEK/minute |
+| Additional phone number | 50 SEK/month |
+| SMS messages | 0.50 SEK/message |
+| Call recording storage | 10 SEK/GB/month |
+
+## Payment Methods
+
+Accepted payment methods:
+- ✅ Credit cards (Visa, Mastercard, Amex)
+- ✅ Debit cards
+- ✅ SEPA Direct Debit (EU)
+- ✅ Invoice (Enterprise plan only)
+
+## Billing Dashboard
+
+Manage billing at `https://www.skaala.ai/dashboard/billing`
+
+### View Usage
+
+```javascript
+// Example: Fetch current billing period usage
+const response = await fetch('https://www.skaala.ai/api/v1/billing/usage', {
+  headers: {
+    'X-API-Key': process.env.SKAALA_API_KEY
+  }
+});
+
+const data = await response.json();
+console.log('Minutes used:', data.minutes_used);
+console.log('Current charges:', data.estimated_charges, 'SEK');
+```
+
+### Update Payment Method
+
+<Steps>
+  <Step title="Navigate to Billing">
+    Go to dashboard → Settings → Billing
+  </Step>
+
+  <Step title="Add Payment Method">
+    Click "Update payment method"
+  </Step>
+
+  <Step title="Enter Card Details">
+    Securely enter card information (handled by Stripe)
+  </Step>
+
+  <Step title="Confirm">
+    New payment method saved and set as default
+  </Step>
+</Steps>
+
+## Webhooks
+
+Receive billing event notifications:
+
+```javascript
+app.post('/webhooks/stripe', async (req, res) => {
+  const event = req.body;
+
+  switch (event.type) {
+    case 'invoice.payment_succeeded':
+      // Payment successful
+      console.log('Payment received:', event.data.object.amount_paid);
+      break;
+
+    case 'invoice.payment_failed':
+      // Payment failed - notify customer
+      await sendPaymentFailureEmail(event.data.object.customer);
+      break;
+
+    case 'customer.subscription.deleted':
+      // Subscription cancelled
+      await deactivateAccount(event.data.object.customer);
+      break;
+  }
+
+  res.status(200).send('OK');
+});
+```
+
+## Invoices
+
+### Download Invoices
+
+Access all past invoices in the billing dashboard:
+- PDF downloads
+- Itemized usage breakdown
+- Payment history
+- Tax information
+
+### Automatic Invoicing
+
+Invoices are generated automatically:
+- **Monthly subscriptions**: 1st of each month
+- **Usage overages**: Included in monthly invoice
+- **Enterprise invoices**: Custom NET-30 terms
+
+## Tax Compliance
+
+<Info>
+VAT is automatically calculated based on your business location
+</Info>
+
+| Region | Tax |
+|--------|-----|
+| Sweden | 25% VAT |
+| Norway | 25% VAT |
+| EU (other) | Local VAT rate |
+| Non-EU | No VAT |
+
+## Cancellation
+
+Cancel anytime with no penalties:
+
+<Warning>
+Cancellation takes effect at the end of current billing period
+</Warning>
+
+<Steps>
+  <Step title="Navigate to Billing">
+    Dashboard → Settings → Billing
+  </Step>
+
+  <Step title="Cancel Subscription">
+    Click "Cancel subscription"
+  </Step>
+
+  <Step title="Confirm Cancellation">
+    Provide feedback (optional)
+  </Step>
+
+  <Step title="Final Invoice">
+    Receive final invoice for current period
+  </Step>
+</Steps>
+
+## Related Resources
+
+<CardGroup cols={2}>
+  <Card title="Pricing" icon="dollar-sign" href="https://www.skaala.ai/pricing">
+    View current pricing plans
+  </Card>
+
+  <Card title="API Reference" icon="code" href="/api-reference/bookings/list-bookings">
+    Programmatic billing access
+  </Card>
+</CardGroup>

@@ -1,0 +1,308 @@
+---
+title: Authentication
+description: Learn how to authenticate with the Skaala API using API keys or OAuth
+---
+
+# API Authentication
+
+Skaala supports two authentication methods for API access:
+
+<CardGroup cols={2}>
+  <Card title="API Keys" icon="key">
+    **Recommended for integrations**
+    Simple bearer token authentication with granular scopes
+  </Card>
+  <Card title="Stack Auth Cookies" icon="cookie">
+    **For web dashboard**
+    Session-based authentication for browser access
+  </Card>
+</CardGroup>
+
+## API Key Authentication
+
+### Creating an API Key
+
+<Tabs>
+  <Tab title="Dashboard UI (Recommended)">
+    <Steps>
+      <Step title="Navigate to settings">
+        Go to **Dashboard** → **Settings** → **Developer**
+      </Step>
+      <Step title="Create API key">
+        Click **Create API Key** and configure:
+        - **Name**: Descriptive name (e.g., "Zapier Integration")
+        - **Scopes**: Select required permissions
+        - **Expiration**: Set expiry date (default: 365 days)
+      </Step>
+      <Step title="Save immediately">
+        **Important**: Copy the key immediately - it's only shown once!
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="API (Programmatic)">
+    ```bash
+    curl -X POST "https://www.skaala.ai/api/teams/{TEAM_ID}/api-keys" \
+      -H "Content-Type: application/json" \
+      -H "Cookie: {YOUR_AUTH_COOKIE}" \
+      -d '{
+        "name": "Zapier Integration",
+        "scopes": ["read:bookings", "write:bookings", "read:contacts"],
+        "expires_in_days": 365
+      }'
+    ```
+  </Tab>
+</Tabs>
+
+### Using API Keys
+
+API keys can be provided in two ways:
+
+<Tabs>
+  <Tab title="Authorization Header (Recommended)">
+    <CodeGroup>
+    ```bash cURL
+    curl "https://www.skaala.ai/api/v1/bookings" \
+      -H "Authorization: Bearer sk_live_your_api_key_here"
+    ```
+
+    ```javascript JavaScript
+    const response = await fetch('https://www.skaala.ai/api/v1/bookings', {
+      headers: {
+        'Authorization': `Bearer ${process.env.SKAALA_API_KEY}`
+      }
+    });
+    ```
+
+    ```python Python
+    import requests
+    import os
+
+    response = requests.get(
+        'https://www.skaala.ai/api/v1/bookings',
+        headers={'Authorization': f"Bearer {os.environ['SKAALA_API_KEY']}"}
+    )
+    ```
+
+    ```powershell PowerShell
+    $ApiKey = $env:SKAALA_API_KEY
+    Invoke-RestMethod -Uri "https://www.skaala.ai/api/v1/bookings" `
+      -Headers @{ "Authorization" = "Bearer $ApiKey" }
+    ```
+    </CodeGroup>
+  </Tab>
+
+  <Tab title="X-API-Key Header">
+    <CodeGroup>
+    ```bash cURL
+    curl "https://www.skaala.ai/api/v1/bookings" \
+      -H "X-API-Key: sk_live_your_api_key_here"
+    ```
+
+    ```javascript JavaScript
+    const response = await fetch('https://www.skaala.ai/api/v1/bookings', {
+      headers: {
+        'X-API-Key': process.env.SKAALA_API_KEY
+      }
+    });
+    ```
+
+    ```python Python
+    response = requests.get(
+        'https://www.skaala.ai/api/v1/bookings',
+        headers={'X-API-Key': os.environ['SKAALA_API_KEY']}
+    )
+    ```
+    </CodeGroup>
+  </Tab>
+</Tabs>
+
+## Available Scopes
+
+API keys support granular permissions to limit access:
+
+<AccordionGroup>
+  <Accordion title="Read Scopes" icon="book-open">
+    - `read:bookings` - View bookings and appointments
+    - `read:contacts` - View contacts and customer profiles
+    - `read:calls` - View call history and transcripts
+    - `read:services` - View services and pricing
+    - `read:staff` - View staff information
+  </Accordion>
+
+  <Accordion title="Write Scopes" icon="pen-to-square">
+    - `write:bookings` - Create and update bookings
+    - `write:contacts` - Create and update contacts
+    - `write:calls` - Create call records
+  </Accordion>
+
+  <Accordion title="Management Scopes" icon="gears">
+    - `webhooks:manage` - Subscribe to and manage webhooks
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  **Best Practice**: Use the minimum scopes required for your integration.
+  For read-only integrations, only request `read:*` scopes.
+</Tip>
+
+## Security Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Environment Variables" icon="shield-check">
+    Never commit API keys to version control. Use environment variables:
+    ```bash
+    export SKAALA_API_KEY=sk_live_...
+    ```
+  </Card>
+
+  <Card title="Minimal Scopes" icon="lock">
+    Grant only the permissions needed. Read-only when possible.
+  </Card>
+
+  <Card title="Set Expiration" icon="calendar-days">
+    Default: 365 days. Rotate keys regularly for production.
+  </Card>
+
+  <Card title="Monitor Usage" icon="chart-line">
+    Check "Last Used" timestamp in dashboard to detect unused keys.
+  </Card>
+</CardGroup>
+
+## Error Responses
+
+<ResponseField name="401 Unauthorized" type="error">
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key"
+  }
+  ```
+
+  **Common causes:**
+  - API key doesn't exist or has been revoked
+  - API key has expired
+  - Invalid format (must start with `sk_live_`)
+</ResponseField>
+
+<ResponseField name="403 Forbidden" type="error">
+  ```json
+  {
+    "error": "forbidden",
+    "message": "Insufficient scopes"
+  }
+  ```
+
+  **Common causes:**
+  - API key lacks required scope for endpoint
+  - User no longer has team access
+  - Team membership revoked
+</ResponseField>
+
+## Complete Example
+
+Here's a complete PowerShell example showing both GET and POST requests:
+
+```powershell PowerShell
+$BaseUrl = "https://www.skaala.ai"
+$ApiKey = $env:SKAALA_API_KEY
+
+# List bookings
+$bookings = Invoke-RestMethod -Method Get `
+  -Uri "$BaseUrl/api/v1/bookings" `
+  -Headers @{ "Authorization" = "Bearer $ApiKey" }
+
+Write-Output "Found $($bookings.meta.total) bookings"
+
+# Create a booking
+$body = @{
+  service_id = "svc_abc123"
+  start_time = "2025-01-15T10:00:00Z"
+  contact = @{
+    name = "Anna Svensson"
+    email = "anna@example.se"
+    phone = "+46701234567"
+  }
+  notes = "First-time customer"
+} | ConvertTo-Json
+
+$newBooking = Invoke-RestMethod -Method Post `
+  -Uri "$BaseUrl/api/v1/bookings" `
+  -Headers @{
+    "Authorization" = "Bearer $ApiKey"
+    "Content-Type" = "application/json"
+  } `
+  -Body $body
+
+Write-Output "Booking created: $($newBooking.data.id)"
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Unauthorized with valid-looking key">
+    **Check:**
+    1. Key format must start with `sk_live_`
+    2. Key hasn't been revoked in dashboard
+    3. Key hasn't expired
+    4. Correct team ID in URL path
+  </Accordion>
+
+  <Accordion title="Forbidden with valid key">
+    **Check:**
+    1. Key has required scope (e.g., `write:bookings` for POST)
+    2. User still has team membership
+    3. Team ID matches key's team
+  </Accordion>
+
+  <Accordion title="Can't create API key">
+    **Check:**
+    1. You have `admin` or `owner` role
+    2. Authenticated via dashboard cookies
+    3. Team ID is correct in the URL
+  </Accordion>
+</AccordionGroup>
+
+## Migration from Cookie Auth
+
+If you're currently using cookie authentication and want to switch:
+
+<Tabs>
+  <Tab title="Before (Cookies)">
+    ```powershell
+    Invoke-RestMethod -Uri "$BaseUrl/api/v1/bookings" `
+      -Headers @{ "Cookie" = "stack-access-token=..." }
+    ```
+  </Tab>
+
+  <Tab title="After (API Key)">
+    ```powershell
+    Invoke-RestMethod -Uri "$BaseUrl/api/v1/bookings" `
+      -Headers @{ "Authorization" = "Bearer sk_live_..." }
+    ```
+  </Tab>
+</Tabs>
+
+**Benefits of API keys:**
+- ✅ No cookie refresh handling required
+- ✅ Simpler authentication flow
+- ✅ Granular permissions via scopes
+- ✅ Easy rotation and revocation
+- ✅ Audit trail with "last used" timestamp
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/getting-started/quickstart">
+    Make your first API call
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference/bookings/list-bookings">
+    Browse all endpoints
+  </Card>
+  <Card title="Rate Limits" icon="gauge-high" href="/guides/rate-limits">
+    Understand API limits
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/guides/webhooks">
+    Set up real-time notifications
+  </Card>
+</CardGroup>

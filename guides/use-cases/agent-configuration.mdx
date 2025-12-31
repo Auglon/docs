@@ -1,0 +1,147 @@
+---
+title: Agent Configuration
+description: Customize your AI receptionist's personality and capabilities
+---
+
+# Agent Configuration
+
+Configure your Skaala AI agent to match your brand voice and business needs.
+
+## Overview
+
+Your AI agent can be customized for:
+- **Personality & Tone**: Professional, friendly, casual, or formal
+- **Language Support**: Swedish, Norwegian, English
+- **Business Rules**: Operating hours, services, pricing
+- **Integration Tools**: Booking, transfers, knowledge base
+
+## Configuration Dashboard
+
+Access agent settings at `https://www.skaala.ai/dashboard/agents`
+
+<Info>
+Changes to agent configuration take effect within 1-2 minutes
+</Info>
+
+## Voice & Personality
+
+### Choose Voice Type
+
+<Tabs>
+  <Tab title="Professional">
+    Business-focused tone suitable for corporate environments
+
+    **Example Response:**
+    > "Good morning, this is Acme Corporation. How may I assist you today?"
+  </Tab>
+
+  <Tab title="Friendly">
+    Warm and approachable for service businesses
+
+    **Example Response:**
+    > "Hi there! Thanks for calling Bella Salon. What can I help you with?"
+  </Tab>
+
+  <Tab title="Casual">
+    Relaxed tone for lifestyle brands
+
+    **Example Response:**
+    > "Hey! You've reached Surf Shack. What's up?"
+  </Tab>
+</Tabs>
+
+### Custom Instructions
+
+Add specific guidelines for your agent:
+
+```yaml
+# Example agent instructions
+greeting: "Welcome to {business_name}. I'm here to help schedule appointments."
+
+booking_policy: |
+  - Require full name and phone number
+  - Confirm appointment details before booking
+  - Offer 3 alternative times if requested slot unavailable
+
+escalation_triggers:
+  - Customer asks for manager
+  - Pricing questions above $1000
+  - Complaints or refund requests
+```
+
+## Tool Configuration
+
+### Enable Booking System
+
+<Steps>
+  <Step title="Connect Calendar">
+    Link Google Calendar or Outlook for availability
+  </Step>
+
+  <Step title="Define Services">
+    Add bookable services with duration and pricing
+  </Step>
+
+  <Step title="Set Business Hours">
+    Configure when appointments can be scheduled
+  </Step>
+</Steps>
+
+### Enable Call Transfers
+
+Configure live agent fallback:
+
+```json
+{
+  "transfer_enabled": true,
+  "transfer_number": "+46701234567",
+  "transfer_triggers": [
+    "customer_escalation",
+    "complex_inquiry",
+    "vip_customer"
+  ]
+}
+```
+
+## Knowledge Base
+
+Train your agent with business-specific information:
+
+<AccordionGroup>
+  <Accordion title="Upload Business Information">
+    Add FAQs, policies, and product details
+  </Accordion>
+
+  <Accordion title="Website Scraping">
+    Automatically pull content from your website
+  </Accordion>
+
+  <Accordion title="Custom Q&A">
+    Define specific question-answer pairs
+  </Accordion>
+</AccordionGroup>
+
+## Testing Your Agent
+
+<Tip>
+Always test agent changes before going live
+</Tip>
+
+### Test Call Process
+
+1. Call your Skaala test number
+2. Try different scenarios (booking, questions, transfers)
+3. Verify responses match your expectations
+4. Adjust configuration as needed
+
+## Related Resources
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="code" href="/api-reference/bookings/list-bookings">
+    Programmatic agent configuration
+  </Card>
+
+  <Card title="ElevenLabs Integration" icon="microphone" href="/integrations/elevenlabs">
+    Voice and audio settings
+  </Card>
+</CardGroup>

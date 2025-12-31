@@ -1,0 +1,263 @@
+---
+title: Zapier Integration
+description: Connect Skaala with 5,000+ apps using Zapier automation
+---
+
+# Zapier Integration
+
+Automate workflows by connecting Skaala with thousands of apps through Zapier.
+
+<Info>
+Skaala's Zapier integration is in beta. Request early access at support@skaala.ai
+</Info>
+
+## Overview
+
+Connect Skaala to popular apps:
+- **CRM**: HubSpot, Salesforce, Pipedrive
+- **Calendar**: Google Calendar, Outlook, Calendly
+- **Communication**: Slack, Microsoft Teams, Discord
+- **Email**: Gmail, SendGrid, Mailchimp
+- **Spreadsheets**: Google Sheets, Airtable, Notion
+
+## Triggers
+
+Skaala events that can start a Zap:
+
+### New Booking
+```javascript
+{
+  "trigger": "booking.created",
+  "data": {
+    "id": "bkg_abc123",
+    "customer_name": "John Doe",
+    "customer_phone": "+46701234567",
+    "service": "Haircut",
+    "start_time": "2025-01-15T10:00:00Z",
+    "created_at": "2025-01-10T14:30:00Z"
+  }
+}
+```
+
+**Example Zaps:**
+- Create Google Calendar event
+- Add contact to CRM
+- Send confirmation email via Gmail
+- Log to Google Sheets
+
+### Cancelled Booking
+```javascript
+{
+  "trigger": "booking.cancelled",
+  "data": {
+    "id": "bkg_abc123",
+    "cancelled_at": "2025-01-12T09:15:00Z",
+    "cancellation_reason": "Customer request"
+  }
+}
+```
+
+**Example Zaps:**
+- Notify team in Slack
+- Update CRM opportunity status
+- Send cancellation email
+
+### Call Completed
+```javascript
+{
+  "trigger": "call.completed",
+  "data": {
+    "id": "call_xyz789",
+    "duration_seconds": 180,
+    "summary": "Customer inquired about pricing",
+    "outcome": "booking_created",
+    "recording_url": "https://..."
+  }
+}
+```
+
+**Example Zaps:**
+- Transcribe call with AssemblyAI
+- Create task in Asana
+- Log to Notion database
+
+### New Contact
+```javascript
+{
+  "trigger": "contact.created",
+  "data": {
+    "id": "cnt_def456",
+    "name": "Jane Smith",
+    "phone": "+46709876543",
+    "email": "jane@example.com",
+    "source": "inbound_call"
+  }
+}
+```
+
+**Example Zaps:**
+- Add to email marketing list
+- Create HubSpot contact
+- Send welcome SMS via Twilio
+
+## Actions
+
+Use Skaala actions in your Zaps:
+
+### Create Booking
+```javascript
+{
+  "action": "create_booking",
+  "input": {
+    "service_id": "svc_abc123",
+    "customer_name": "{{trigger.name}}",
+    "customer_phone": "{{trigger.phone}}",
+    "start_time": "{{trigger.selected_time}}"
+  }
+}
+```
+
+**Example workflows:**
+- Create booking from Calendly event
+- Book appointment from form submission
+- Schedule follow-up from CRM task
+
+### Send SMS
+```javascript
+{
+  "action": "send_sms",
+  "input": {
+    "to": "{{trigger.phone}}",
+    "message": "Your appointment is tomorrow at {{booking.time}}"
+  }
+}
+```
+
+**Example workflows:**
+- Send reminder 24h before booking
+- Notify customer of status change
+- Send promotional offers
+
+## Example Zaps
+
+### 1. New Booking → Create Calendar Event + Send Email
+
+<Steps>
+  <Step title="Trigger: New Booking in Skaala">
+    When a booking is created
+  </Step>
+
+  <Step title="Action: Create Google Calendar Event">
+    Add appointment to calendar
+  </Step>
+
+  <Step title="Action: Send Email via Gmail">
+    Send confirmation email to customer
+  </Step>
+
+  <Step title="Action: Post to Slack">
+    Notify team in #bookings channel
+  </Step>
+</Steps>
+
+### 2. Form Submission → Create Contact + Book Appointment
+
+<Steps>
+  <Step title="Trigger: New Typeform Response">
+    Customer submits booking request form
+  </Step>
+
+  <Step title="Action: Create Contact in Skaala">
+    Add customer details to CRM
+  </Step>
+
+  <Step title="Action: Create Booking in Skaala">
+    Book appointment from form data
+  </Step>
+
+  <Step title="Action: Send SMS via Skaala">
+    Send booking confirmation
+  </Step>
+</Steps>
+
+### 3. Call Completed → Log to CRM + Create Task
+
+<Steps>
+  <Step title="Trigger: Call Completed in Skaala">
+    AI call finishes
+  </Step>
+
+  <Step title="Action: Update HubSpot Contact">
+    Log call notes and outcome
+  </Step>
+
+  <Step title="Action: Create Asana Task">
+    Create follow-up task if needed
+  </Step>
+</Steps>
+
+## Setup Instructions
+
+<Steps>
+  <Step title="Connect Skaala Account">
+    In Zapier, search for Skaala and click "Connect"
+  </Step>
+
+  <Step title="Enter API Key">
+    Get your API key from Skaala dashboard → Settings → API Keys
+  </Step>
+
+  <Step title="Test Connection">
+    Zapier will verify your credentials
+  </Step>
+
+  <Step title="Create Your First Zap">
+    Choose trigger and actions to automate your workflow
+  </Step>
+</Steps>
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use Filters to Reduce Zap Runs">
+    Add filters to only process specific events (e.g., bookings over $500)
+  </Accordion>
+
+  <Accordion title="Add Delays for Sequential Actions">
+    Use Zapier's delay feature for time-sensitive workflows
+  </Accordion>
+
+  <Accordion title="Test Thoroughly Before Enabling">
+    Run test Zaps to verify data mapping is correct
+  </Accordion>
+
+  <Accordion title="Monitor Zap History">
+    Check Zapier task history for errors and troubleshooting
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+### Zap Not Triggering
+
+- Verify webhook is active in Skaala dashboard
+- Check API key has correct permissions
+- Ensure event type matches trigger configuration
+
+### Data Mapping Issues
+
+- Use Zapier's formatter to transform data types
+- Add custom JavaScript code for complex transformations
+- Test with sample data before going live
+
+## Related Resources
+
+<CardGroup cols={2}>
+  <Card title="Webhooks Guide" icon="webhook" href="/guides/webhooks">
+    Direct webhook integration
+  </Card>
+
+  <Card title="API Reference" icon="code" href="/api-reference/bookings/list-bookings">
+    Build custom integrations
+  </Card>
+</CardGroup>

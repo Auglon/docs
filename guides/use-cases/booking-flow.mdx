@@ -1,0 +1,93 @@
+---
+title: Booking Flow Integration
+description: Complete guide to implementing AI-powered booking system
+---
+
+# Booking Flow Integration
+
+Learn how to integrate Skaala's AI-powered booking system into your application.
+
+## Overview
+
+Skaala's booking system enables customers to schedule appointments through natural conversation with your AI receptionist. The system handles:
+
+- **Availability Checking**: Real-time calendar integration
+- **Slot Booking**: Automatic reservation and confirmation
+- **Conflict Prevention**: Double-booking protection
+- **Customer Notifications**: SMS/email confirmations
+
+## Integration Steps
+
+<Steps>
+  <Step title="Configure Services">
+    Define your bookable services with duration and pricing
+    ```bash
+    curl -X POST https://www.skaala.ai/api/v1/services \
+      -H "X-API-Key: sk_live_..." \
+      -d '{
+        "name": "Haircut",
+        "duration_minutes": 60,
+        "price": 500
+      }'
+    ```
+  </Step>
+
+  <Step title="Connect Calendar">
+    Link your Google Calendar or Outlook calendar for availability sync
+  </Step>
+
+  <Step title="Configure Agent">
+    Set up your AI agent to handle booking requests naturally
+  </Step>
+
+  <Step title="Test Booking Flow">
+    Call your Skaala number and request an appointment
+  </Step>
+</Steps>
+
+## Webhook Events
+
+Monitor booking events in real-time:
+
+```javascript
+// Listen for new bookings
+app.post('/webhooks/skaala', (req, res) => {
+  const { event, data } = req.body;
+
+  if (event === 'booking.created') {
+    console.log('New booking:', data);
+    // Send confirmation email
+    // Update internal systems
+  }
+
+  res.status(200).send('OK');
+});
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Buffer Time Between Appointments">
+    Add 10-15 minute buffers to prevent scheduling conflicts
+  </Accordion>
+
+  <Accordion title="Confirmation Requirements">
+    Require customer phone/email before confirming bookings
+  </Accordion>
+
+  <Accordion title="Cancellation Policy">
+    Configure cancellation windows and automated reminders
+  </Accordion>
+</AccordionGroup>
+
+## Related Resources
+
+<CardGroup cols={2}>
+  <Card title="Bookings API" icon="calendar" href="/api-reference/bookings/list-bookings">
+    Full API reference for booking endpoints
+  </Card>
+
+  <Card title="Webhooks Guide" icon="webhook" href="/guides/webhooks">
+    Set up real-time event notifications
+  </Card>
+</CardGroup>

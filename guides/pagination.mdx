@@ -1,0 +1,37 @@
+---
+title: Pagination
+description: Efficiently handle large result sets with pagination
+---
+
+# Pagination
+
+List endpoints return paginated results to keep response sizes manageable.
+
+## Pagination Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `page` | integer | 1 | Page number (1-indexed) |
+| `per_page` | integer | 25 | Items per page (max: 100) |
+
+## Response Format
+
+```json
+{
+  "data": [...],
+  "meta": {
+    "total": 247,
+    "page": 1,
+    "per_page": 25,
+    "has_more": true
+  }
+}
+```
+
+## Example
+
+```bash
+# Get second page of bookings
+curl "https://www.skaala.ai/api/v1/bookings?page=2&per_page=50" \
+  -H "X-API-Key: sk_live_..."
+```
