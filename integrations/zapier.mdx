@@ -96,9 +96,9 @@ Skaala events that can start a Zap:
 ```
 
 **Example Zaps:**
-- Add to email marketing list
+- Add to email marketing list (Mailchimp, SendGrid)
 - Create HubSpot contact
-- Send welcome SMS via Twilio
+- Send welcome email via Gmail
 
 ## Actions
 
@@ -250,14 +250,207 @@ Use Skaala actions in your Zaps:
 - Add custom JavaScript code for complex transformations
 - Test with sample data before going live
 
+## Advanced: Zapier MCP Agent Integration
+
+<Info>
+**What's This?** Your Skaala AI agent can actually trigger Zapier automations DURING phone conversations! This is an advanced feature that lets your AI do powerful actions while talking to customers.
+</Info>
+
+### How It Works
+
+When properly configured, your AI agent can:
+- Trigger specific Zaps during conversations
+- Pass information from the call into automation workflows
+- Take actions based on what the customer says
+- Update multiple systems in real-time
+
+**Example Scenario:**
+
+```
+Customer: "Can you add me to your VIP customer list?"
+AI: "Absolutely! I'm adding you right now."
+→ AI triggers Zap that:
+  1. Tags contact as "VIP" in CRM
+  2. Adds to exclusive email list
+  3. Sends notification to sales team
+  4. Updates loyalty program database
+AI: "Done! You'll get our VIP newsletter starting next week."
+```
+
+### What the AI Agent Can Do with Zapier
+
+<AccordionGroup>
+  <Accordion title="Customer Information Management">
+    - Add contacts to email marketing lists during calls
+    - Update CRM records with conversation details
+    - Create tasks for follow-up based on customer requests
+    - Tag customers based on conversation topics
+  </Accordion>
+
+  <Accordion title="Real-Time Notifications">
+    - Notify your team in Slack when VIP customer calls
+    - Alert manager when booking value exceeds threshold
+    - Create support tickets from customer complaints
+    - Send SMS to technician when urgent service requested
+  </Accordion>
+
+  <Accordion title="Data Logging & Analytics">
+    - Log call outcomes to Google Sheets
+    - Track lead sources in Airtable
+    - Update Notion databases with customer insights
+    - Record interaction details in Monday.com
+  </Accordion>
+
+  <Accordion title="Multi-System Updates">
+    - Book appointment in external scheduling system
+    - Create invoice in accounting software
+    - Update inventory when service is booked
+    - Log lead in multiple CRM systems simultaneously
+  </Accordion>
+</AccordionGroup>
+
+### Setting Up AI-Triggered Zaps
+
+<Steps>
+  <Step title="Create a Webhook Zap">
+    In Zapier, create a Zap that starts with "Webhooks by Zapier" trigger
+  </Step>
+
+  <Step title="Get Webhook URL">
+    Zapier will provide a unique webhook URL
+  </Step>
+
+  <Step title="Configure in Skaala">
+    In your dashboard, go to Settings → Integrations → Zapier MCP
+    Add the webhook URL and name the action (e.g., "add_to_vip_list")
+  </Step>
+
+  <Step title="Train Your AI">
+    In AI Assistant settings, tell the AI when to trigger this Zap:
+    "When customer asks to join VIP program, trigger add_to_vip_list"
+  </Step>
+
+  <Step title="Test It">
+    Call your number and test the trigger phrase
+  </Step>
+</Steps>
+
+### Example Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Priority Customer Routing" icon="star">
+    **Trigger**: Customer identifies as existing VIP
+
+    **Zap Actions**:
+    - Check VIP status in CRM
+    - Notify account manager via Slack
+    - Flag call for priority callback if AI can't help
+  </Card>
+
+  <Card title="Lead Capture & Distribution" icon="users">
+    **Trigger**: Customer asks about enterprise services
+
+    **Zap Actions**:
+    - Create lead in Salesforce
+    - Add to enterprise email sequence
+    - Assign to sales rep based on territory
+    - Schedule discovery call
+  </Card>
+
+  <Card title="Inventory Management" icon="box">
+    **Trigger**: Customer books service requiring specific equipment
+
+    **Zap Actions**:
+    - Check inventory in Airtable
+    - Reserve equipment for booking time
+    - Create purchase order if stock low
+    - Notify warehouse team
+  </Card>
+
+  <Card title="Emergency Escalation" icon="bell">
+    **Trigger**: Customer mentions urgent problem or keyword
+
+    **Zap Actions**:
+    - Create high-priority ticket in Help Scout
+    - Send SMS to on-call technician
+    - Post in #emergencies Slack channel
+    - Log incident in PagerDuty
+  </Card>
+</CardGroup>
+
+### Best Practices for AI-Triggered Zaps
+
+<AccordionGroup>
+  <Accordion title="Keep Triggers Simple">
+    Don't create too many triggers - it confuses the AI. Limit to 3-5 key automations.
+  </Accordion>
+
+  <Accordion title="Use Clear Trigger Names">
+    Name triggers descriptively: "add_to_vip_list" not "zap1". AI uses these names to understand what to do.
+  </Accordion>
+
+  <Accordion title="Test Thoroughly">
+    Call your number and test each trigger multiple times with different phrasings to ensure AI recognizes them.
+  </Accordion>
+
+  <Accordion title="Monitor Zap History">
+    Regularly check Zapier task history to ensure automations are working correctly and not triggering unexpectedly.
+  </Accordion>
+
+  <Accordion title="Add Failsafes">
+    Include filters in your Zaps to prevent actions if critical data is missing (e.g., don't add to email list without email address).
+  </Accordion>
+</AccordionGroup>
+
+### Troubleshooting AI-Triggered Zaps
+
+<AccordionGroup>
+  <Accordion title="AI isn't triggering the Zap">
+    **Possible causes:**
+    - Trigger phrase too complex or ambiguous
+    - AI not properly trained on when to use it
+    - Webhook URL incorrect or expired
+
+    **Solution:** Simplify trigger phrase, retrain AI with more examples, verify webhook URL
+  </Accordion>
+
+  <Accordion title="Zap triggers at wrong times">
+    **Possible causes:**
+    - Trigger phrase too generic (e.g., "help")
+    - Multiple similar triggers confusing AI
+
+    **Solution:** Make trigger phrases more specific and distinct from each other
+  </Accordion>
+
+  <Accordion title="Data not passing correctly">
+    **Possible causes:**
+    - Field mapping errors
+    - AI not extracting data correctly
+
+    **Solution:** Use Zapier's formatter to handle data transformation, add more structure to what AI should capture
+  </Accordion>
+</AccordionGroup>
+
+---
+
 ## Related Resources
 
 <CardGroup cols={2}>
   <Card title="Webhooks Guide" icon="webhook" href="/guides/webhooks">
-    Direct webhook integration
+    Direct webhook integration for real-time events
   </Card>
 
   <Card title="API Reference" icon="code" href="/api-reference/bookings/list-bookings">
-    Build custom integrations
+    Build custom integrations with our REST API
+  </Card>
+
+  <Card title="AI Assistant Guide" icon="robot" href="/guides/dashboard-overview#ai-assistant-configuration">
+    Learn how to configure your AI's capabilities
   </Card>
 </CardGroup>
+
+## Need Help Setting This Up?
+
+The Zapier MCP integration is powerful but can be complex. Our support team can help you design and implement the perfect automation workflows for your business.
+
+**Contact us**: support@skaala.ai or chat in your dashboard

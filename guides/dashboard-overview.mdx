@@ -1,0 +1,383 @@
+---
+title: Dashboard Overview
+description: Everything you can do in your Skaala dashboard
+---
+
+# Dashboard Overview
+
+Your Skaala dashboard is mission control for your AI receptionist. This guide explains every feature and what you can do with it.
+
+## Main Navigation
+
+<CardGroup cols={2}>
+  <Card title="Overview" icon="home">
+    Your at-a-glance summary of everything happening
+  </Card>
+  <Card title="Bookings" icon="calendar">
+    Manage all appointments and reservations
+  </Card>
+  <Card title="Contacts" icon="users">
+    Your customer relationship management (CRM) system
+  </Card>
+  <Card title="Calls" icon="phone">
+    Listen to recordings and read transcripts
+  </Card>
+  <Card title="AI Assistant" icon="robot">
+    Configure your AI's personality and capabilities
+  </Card>
+  <Card title="Analytics" icon="chart-line">
+    Reports, insights, and performance metrics
+  </Card>
+  <Card title="Settings" icon="gear">
+    Business info, team members, billing, and integrations
+  </Card>
+</CardGroup>
+
+---
+
+## Overview Page
+
+When you log in, you'll see your dashboard overview - a snapshot of what's happening right now.
+
+### Live Status
+
+At the top, you'll see:
+- **AI Status**: Is your receptionist online and ready to take calls?
+- **Today's Stats**: Calls answered, bookings made, revenue earned
+- **Active Call**: If someone is calling right now, you'll see it here
+
+### Quick Actions
+
+<CardGroup cols={3}>
+  <Card title="Add Booking" icon="plus">
+    Manually create an appointment
+  </Card>
+  <Card title="View Recent Calls" icon="phone">
+    Jump to the latest call logs
+  </Card>
+  <Card title="Update Hours" icon="clock">
+    Change when you're open/closed
+  </Card>
+</CardGroup>
+
+### Recent Activity Feed
+
+See a timeline of everything happening:
+- New bookings made by the AI
+- Calls received and answered
+- Payments processed
+- Booking cancellations or changes
+
+<Tip>
+  Click any item in the feed to see full details, listen to the call recording, or view the booking.
+</Tip>
+
+---
+
+## Bookings Management
+
+This is where you manage all your appointments.
+
+### Viewing Bookings
+
+**Calendar View**: See all bookings on a calendar (day, week, or month)
+**List View**: Table of all upcoming bookings with search and filters
+**Past Bookings**: Historical record of completed appointments
+
+### Booking Details
+
+Click any booking to see:
+- **Customer Info**: Who booked (name, phone, email)
+- **Service Details**: What they booked and for how long
+- **Payment Status**: Paid, pending, or pay in person
+- **Notes**: Any special requests or information
+- **Call Recording**: Listen to how the AI booked it
+- **Booking Source**: Phone call, API, manual, or Zapier
+
+### What You Can Do
+
+<AccordionGroup>
+  <Accordion title="Reschedule Appointments">
+    Drag-and-drop in calendar view or click "Reschedule" to pick a new time. Customer gets automatic notification.
+  </Accordion>
+
+  <Accordion title="Cancel Bookings">
+    Click "Cancel" and choose:
+    - Notify customer (sends email/SMS)
+    - Refund if they paid
+    - Add cancellation reason
+  </Accordion>
+
+  <Accordion title="Add Manual Bookings">
+    If someone books via email, social media, or in person, add it manually so your AI knows that time slot is taken.
+  </Accordion>
+
+  <Accordion title="Update Booking Notes">
+    Add internal notes visible only to you (e.g., "VIP customer" or "First time visitor")
+  </Accordion>
+
+  <Accordion title="Mark as No-Show">
+    If customer didn't show up, mark it as no-show to track and optionally charge no-show fee.
+  </Accordion>
+</AccordionGroup>
+
+### Booking Rules
+
+Configure how bookings work in **Settings → Booking Rules**:
+- Minimum advance notice (e.g., "must book at least 2 hours ahead")
+- Maximum advance booking (e.g., "can only book up to 3 months out")
+- Buffer time between appointments
+- Allow double-booking or block time slots
+
+---
+
+## Contacts (CRM)
+
+Every person who calls becomes a contact automatically.
+
+### Contact Profiles
+
+Each contact shows:
+- **Basic Info**: Name, phone, email
+- **Call History**: Every conversation they've had with your AI
+- **Booking History**: All their appointments (past and future)
+- **Total Spent**: If you have payments enabled
+- **Tags**: Label customers (e.g., "Regular", "VIP", "Needs Follow-up")
+- **Notes**: Add private notes about the customer
+
+### What You Can Do
+
+<CardGroup cols={2}>
+  <Card title="Search & Filter">
+    Find contacts by name, phone, email, tags, or booking history
+  </Card>
+  <Card title="Bulk Actions">
+    Select multiple contacts to tag, export, or delete
+  </Card>
+  <Card title="Export Data">
+    Download contact lists as CSV for email marketing or other tools
+  </Card>
+  <Card title="Merge Duplicates">
+    If same person called from different numbers, merge their profiles
+  </Card>
+</CardGroup>
+
+<Info>
+  **Privacy Note**: All contact data is encrypted and GDPR-compliant. Customers can request their data deletion at any time.
+</Info>
+
+---
+
+## Call Logs & Recordings
+
+Review every call your AI has handled.
+
+### Call List
+
+See all calls with:
+- **Date & Time**: When the call happened
+- **Duration**: How long it lasted
+- **Caller**: Who called (if number is recognized)
+- **Outcome**: Booking made, info provided, missed call, etc.
+- **Recording**: Listen to the full conversation
+
+### Call Details Page
+
+Click any call to see:
+- **Full Transcript**: Written record of the conversation
+- **Audio Player**: Listen to the recording
+- **AI Actions**: What the AI did (booked appointment, sent SMS, etc.)
+- **Sentiment Analysis**: Was the caller happy, frustrated, or neutral?
+- **Keywords**: Automatically detected topics (pricing, hours, cancellation, etc.)
+
+### Quality Monitoring
+
+<AccordionGroup>
+  <Accordion title="Track AI Performance">
+    See how well your AI is handling calls:
+    - Successful bookings vs. missed opportunities
+    - Average call duration
+    - Calls where AI asked for help or couldn't answer
+  </Accordion>
+
+  <Accordion title="Improve Responses">
+    If you notice the AI giving wrong information:
+    1. Flag the call
+    2. Update AI training in Assistant settings
+    3. AI learns for next time
+  </Accordion>
+
+  <Accordion title="Export Transcripts">
+    Download transcripts for compliance, training, or review purposes
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+  **Legal Note**: Call recordings are stored for 90 days by default. Comply with your local laws regarding call recording and customer notification.
+</Warning>
+
+---
+
+## AI Assistant Configuration
+
+This is where you teach your AI how to represent your business.
+
+### Personality & Tone
+
+Choose your AI's communication style:
+- **Professional**: Formal, businesslike (good for legal, medical, corporate)
+- **Friendly**: Warm and approachable (good for services, hospitality)
+- **Casual**: Relaxed and conversational (good for creative businesses)
+- **Custom**: Write your own personality description
+
+**Example Settings:**
+```
+Personality: Friendly and professional
+Greeting: "Hej! You've reached Spa Harmony. How can I help you today?"
+Tone: "Be warm but efficient. Use the customer's name if they give it."
+```
+
+### What the AI Knows
+
+Train your AI by providing:
+- **Business Description**: What you do in plain language
+- **Services Offered**: Detailed list with descriptions and prices
+- **Common Questions**: FAQ that the AI can reference
+- **Policies**: Cancellation policy, payment terms, etc.
+- **Special Instructions**: Anything specific (e.g., "We're closed on Swedish holidays")
+
+### Capabilities You Can Enable
+
+<CardGroup cols={2}>
+  <Card title="Booking Appointments" icon="calendar-check">
+    AI can access your calendar and book available slots
+  </Card>
+  <Card title="Send SMS During Calls" icon="message">
+    AI can text links, confirmations, or info while talking
+  </Card>
+  <Card title="Answer FAQs" icon="question">
+    AI responds to common questions about hours, pricing, location
+  </Card>
+  <Card title="Take Messages" icon="envelope">
+    If AI can't help, it takes detailed messages for you
+  </Card>
+</CardGroup>
+
+### Advanced Features
+
+<AccordionGroup>
+  <Accordion title="Multi-Language Support">
+    Enable Swedish, Norwegian, and English. AI auto-detects language and switches seamlessly.
+  </Accordion>
+
+  <Accordion title="Custom Workflows">
+    Create specific call flows (e.g., "If caller asks about X, say Y and then offer Z")
+  </Accordion>
+
+  <Accordion title="Integration Actions">
+    Connect to Zapier to trigger automations when certain things happen during calls
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Analytics & Reports
+
+Understand your business performance with detailed analytics.
+
+### Key Metrics Dashboard
+
+<CardGroup cols={3}>
+  <Card title="Call Volume">
+    Total calls, answered calls, missed calls
+  </Card>
+  <Card title="Booking Conversion">
+    Percentage of calls that result in bookings
+  </Card>
+  <Card title="Revenue Tracking">
+    Total bookings value and payments received
+  </Card>
+  <Card title="Busiest Hours">
+    When do you get most calls? Plan staffing accordingly
+  </Card>
+  <Card title="Average Call Duration">
+    How long customers spend on the phone
+  </Card>
+  <Card title="Customer Satisfaction">
+    Based on call sentiment and feedback
+  </Card>
+</CardGroup>
+
+### Reports You Can Generate
+
+- **Weekly/Monthly Summaries**: Email reports sent automatically
+- **Service Performance**: Which services are most popular?
+- **Caller Demographics**: Where are calls coming from?
+- **Peak Times Analysis**: When should you have staff ready?
+- **Revenue by Service**: What makes the most money?
+
+<Tip>
+  **Pro Tip**: Use the "Compare to Previous Period" feature to see if you're growing week-over-week or month-over-month.
+</Tip>
+
+---
+
+## Settings
+
+### Business Information
+- Update name, address, website
+- Change business hours
+- Add holidays and special closures
+- Update contact information
+
+### Team Management
+- Invite team members
+- Set permissions (Admin, Manager, Viewer)
+- Each member gets their own login
+
+### Billing & Subscription
+- View current plan and usage
+- Upgrade/downgrade plan
+- Payment method and invoices
+- Usage alerts (e.g., "90% of monthly minutes used")
+
+### Integrations
+- Connect Stripe for payments
+- Link Zapier for automation
+- API key management for custom integrations
+- Webhook configuration for real-time events
+
+---
+
+## Quick Tips for Power Users
+
+<CardGroup cols={2}>
+  <Card title="Keyboard Shortcuts">
+    Press `?` anywhere in the dashboard to see all shortcuts
+  </Card>
+  <Card title="Bulk Operations">
+    Select multiple items (bookings, contacts, calls) for batch actions
+  </Card>
+  <Card title="Custom Views">
+    Save filtered views for quick access (e.g., "Today's Bookings", "VIP Contacts")
+  </Card>
+  <Card title="Mobile App">
+    Download the Skaala mobile app to manage on-the-go
+  </Card>
+</CardGroup>
+
+---
+
+## Need More Help?
+
+<CardGroup cols={3}>
+  <Card title="Video Tutorials" icon="video" href="https://www.skaala.ai/help">
+    Watch step-by-step guides
+  </Card>
+  <Card title="Contact Support" icon="headset" href="https://www.skaala.ai/en/contact">
+    Get help from our team
+  </Card>
+  <Card title="Community Forum" icon="users" href="https://www.skaala.ai/community">
+    Learn from other Skaala users
+  </Card>
+</CardGroup>

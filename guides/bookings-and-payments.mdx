@@ -1,0 +1,451 @@
+---
+title: Bookings & Payments
+description: How the booking system and payment processing work
+---
+
+# Bookings & Payments
+
+Skaala's booking system lets your AI receptionist schedule appointments and collect payments automatically. This guide explains how it all works.
+
+## How Bookings Work
+
+### The Customer Experience
+
+When someone calls your Skaala number and wants to book an appointment:
+
+<Steps>
+  <Step title="AI Checks Availability">
+    Your AI looks at your calendar in real-time and tells the caller which time slots are open
+  </Step>
+  <Step title="Customer Chooses Time">
+    Caller picks their preferred date and time
+  </Step>
+  <Step title="AI Collects Information">
+    Gets name, phone, email, and any special requests
+  </Step>
+  <Step title="Payment (if enabled)">
+    If you require payment, AI securely collects payment information
+  </Step>
+  <Step title="Confirmation">
+    Customer gets instant confirmation via SMS and email
+  </Step>
+</Steps>
+
+### Behind the Scenes
+
+What happens after the booking:
+1. **Calendar Updated**: Booking appears in your dashboard instantly
+2. **Time Slot Blocked**: That time is no longer offered to other callers
+3. **Customer Added**: Contact is created or updated in your CRM
+4. **Notifications Sent**: You and the customer both get confirmation
+5. **Payment Processed**: If payment required, funds are secured immediately
+
+<Info>
+  **Real-Time Sync**: If you manually add a booking in your dashboard, the AI immediately knows about it and won't double-book that slot.
+</Info>
+
+---
+
+## Booking Configuration
+
+### Service Setup
+
+Each service you offer needs to be configured with:
+
+**Required Information:**
+- Service name (e.g., "60-Minute Massage", "Haircut & Styling")
+- Duration (how long it takes)
+- Price (can be free if you don't charge)
+- Description (helps AI explain it to customers)
+
+**Optional Settings:**
+- Buffer time before/after (e.g., 15 minutes between appointments)
+- Specific availability (only certain days/times)
+- Maximum bookings per day
+- Requires deposit vs. full payment
+
+### Calendar Rules
+
+Control when bookings can be made:
+
+<AccordionGroup>
+  <Accordion title="Advance Notice">
+    **Minimum**: Prevent last-minute bookings (e.g., "must book at least 2 hours ahead")
+
+    **Maximum**: Limit how far in advance (e.g., "can only book up to 3 months out")
+
+    **Why this matters**: Gives you time to prepare and prevents booking conflicts
+  </Accordion>
+
+  <Accordion title="Availability Windows">
+    Set when each service is available:
+    - Regular business hours
+    - Specific days only (e.g., "Spa treatments only on weekdays")
+    - Seasonal variations
+
+    Example: "Haircuts available Mon-Sat 9am-6pm, but premium color services only Tue-Thu"
+  </Accordion>
+
+  <Accordion title="Capacity Management">
+    Control booking limits:
+    - Maximum appointments per day
+    - Maximum simultaneous bookings (if you have multiple staff)
+    - Block off time for breaks, lunch, admin work
+  </Accordion>
+
+  <Accordion title="Smart Scheduling">
+    Let AI optimize your calendar:
+    - Group similar services together
+    - Minimize gaps between appointments
+    - Prefer back-to-back bookings or spaced out (your choice)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Payment Processing with Stripe
+
+If you want to collect payments when customers book, you'll use Stripe - a secure, trusted payment platform used by millions of businesses worldwide.
+
+### What is Stripe Express?
+
+**Think of it like this:** Stripe Express is your own mini payment processor, connected to your bank account. When customers pay, money goes through Stripe and directly to your bank.
+
+**Why Stripe Express?**
+- ✅ **You keep control**: Funds go to YOUR bank account
+- ✅ **Fast payouts**: Money available in 2-7 business days
+- ✅ **Customer trust**: They see payments are processed by Stripe (secure & familiar)
+- ✅ **No middleman**: Skaala never touches your money
+
+### Setting Up Stripe (5-Minute Process)
+
+<Steps>
+  <Step title="Connect from Dashboard">
+    Go to Settings → Payments → "Connect Stripe"
+  </Step>
+  <Step title="Create Stripe Account">
+    If you don't have one, create a free Stripe Express account:
+    - Business info (name, type, address)
+    - Bank account details (for payouts)
+    - ID verification (required by law)
+  </Step>
+  <Step title="Configure Payment Settings">
+    Choose your preferences:
+    - When to charge (booking time vs. later)
+    - Refund policy
+    - Deposit vs. full payment
+  </Step>
+  <Step title="Test It">
+    Make a test booking to ensure everything works
+  </Step>
+</Steps>
+
+<Warning>
+  **Important**: Stripe requires business verification for legal/security reasons. Have your business registration info and bank account number ready.
+</Warning>
+
+### Payment Options
+
+You have several ways to collect payment:
+
+<CardGroup cols={2}>
+  <Card title="Full Payment at Booking" icon="credit-card">
+    **Best for**: Services where no-shows are costly
+
+    Customer pays entire amount when they book. Booking is guaranteed.
+  </Card>
+
+  <Card title="Deposit Only" icon="coins">
+    **Best for**: High-value services
+
+    Customer pays partial amount (e.g., 20-50%) to secure booking. Pay rest in person.
+  </Card>
+
+  <Card title="Pay in Person" icon="building-columns">
+    **Best for**: Building trust with new customers
+
+    No payment required to book. Customer pays when they arrive. Higher no-show risk.
+  </Card>
+
+  <Card title="Mixed Approach" icon="split">
+    **Best for**: Multiple service types
+
+    Require payment for some services, allow pay-in-person for others.
+  </Card>
+</CardGroup>
+
+### Payment Flow (What Customers Experience)
+
+**During the Call:**
+1. AI mentions the price: "This service is 450 kr"
+2. If payment required, AI asks: "Would you like to pay now to confirm your booking?"
+3. Customer says yes → AI sends a secure payment link via SMS
+4. Customer clicks link, enters card info on Stripe's secure page
+5. Payment processed → Booking confirmed instantly
+
+**Alternatively:**
+- AI can take card details over the phone (if you enable this)
+- Customer can pay later via link in confirmation email
+
+<Tip>
+  **Security Note**: Skaala and your AI never see or store card numbers. All payment info goes directly to Stripe's secure servers.
+</Tip>
+
+---
+
+## Managing Payments in Your Dashboard
+
+### Payment Status Tracking
+
+Each booking shows payment status:
+- ✅ **Paid**: Payment received, booking secured
+- ⏳ **Pending**: Payment link sent but not completed
+- 💰 **Deposit Paid**: Partial payment received
+- 📍 **Pay in Person**: No advance payment required
+- ❌ **Refunded**: Payment was returned to customer
+
+### Refunds & Cancellations
+
+**If customer needs to cancel:**
+
+<Steps>
+  <Step title="Go to Booking Details">
+    Find the booking in your dashboard
+  </Step>
+  <Step title="Click 'Cancel Booking'">
+    Choose cancellation reason
+  </Step>
+  <Step title="Choose Refund Option">
+    - **Full refund**: Return entire payment
+    - **Partial refund**: Keep cancellation fee
+    - **No refund**: Per your policy
+  </Step>
+  <Step title="Process Refund">
+    Refund appears in customer's account in 5-10 business days
+  </Step>
+</Steps>
+
+<Warning>
+  **Refund Policy**: Clearly state your cancellation and refund policy. AI can mention it during booking: "Please note we have a 24-hour cancellation policy."
+</Warning>
+
+### Financial Reports
+
+Track your revenue in **Analytics → Financial Reports**:
+- Total bookings value
+- Payments received vs. pending
+- Refunds issued
+- Revenue by service type
+- Revenue by day/week/month
+
+**Export Options:**
+- Download as CSV for accounting software
+- Automatic monthly reports via email
+- Integration with accounting tools (via Zapier)
+
+---
+
+## Advanced Booking Features
+
+### Variable Pricing
+
+Charge different rates based on:
+- **Time of day**: Higher rates for peak hours
+- **Day of week**: Weekend premium pricing
+- **Season**: Summer vs. winter rates
+- **Duration**: Discounts for longer sessions
+
+Example:
+```
+Standard Massage (60 min): 500 kr
+Extended Massage (90 min): 650 kr (save 100 kr!)
+Weekend Massage (60 min): 600 kr
+```
+
+### Packages & Bundles
+
+Sell multi-session packages:
+- "Buy 5 sessions, get 6th free"
+- "Monthly unlimited pass"
+- "Package of 10 sessions at discounted rate"
+
+AI can explain packages during calls and book package sessions.
+
+### Add-Ons & Upgrades
+
+Let customers enhance their booking:
+- "Add aromatherapy for +50 kr"
+- "Upgrade to premium products"
+- "Include after-care kit"
+
+AI asks about add-ons naturally during booking.
+
+### Group Bookings
+
+Accept bookings for multiple people:
+- "Book 2 spa treatments at the same time"
+- "Reserve time for me and 3 friends"
+- AI handles group pricing and scheduling
+
+---
+
+## Booking Rules & Policies
+
+### No-Show Prevention
+
+Reduce no-shows with these strategies:
+
+<CardGroup cols={2}>
+  <Card title="Require Payment">
+    Customers who pay upfront rarely miss appointments
+  </Card>
+  <Card title="Reminder Messages">
+    Automatic SMS/email 24 hours before appointment
+  </Card>
+  <Card title="Easy Rescheduling">
+    Let customers change time via link (avoids no-shows)
+  </Card>
+  <Card title="No-Show Fees">
+    Charge penalty if payment was required but customer didn't show
+  </Card>
+</CardGroup>
+
+### Cancellation Policy
+
+Set clear rules:
+- **Free cancellation**: Up to X hours before appointment
+- **Cancellation fee**: If cancelled within X hours
+- **No refund**: If customer simply doesn't show up
+
+Example Policy:
+```
+"Free cancellation up to 24 hours before your appointment.
+Cancellations within 24 hours: 50% charge.
+No-shows: Full charge."
+```
+
+AI automatically mentions this when taking bookings.
+
+---
+
+## Integration with External Systems
+
+### Calendar Sync
+
+Connect your existing calendar:
+- Google Calendar
+- Outlook Calendar
+- Apple Calendar
+- iCal-compatible systems
+
+**Two-way sync means:**
+- Skaala bookings appear in your calendar
+- Events in your calendar block off time in Skaala
+- No double-bookings, ever
+
+### External Booking Systems
+
+Already have a booking system? Integrate it:
+- Skaala can check availability via API
+- AI books directly in your existing system
+- All your current workflows stay the same
+
+Supported platforms:
+- Bokadirekt
+- Timely
+- Acuity Scheduling
+- Custom systems via API
+
+### Point-of-Sale Integration
+
+If you have a POS system:
+- Sync pricing from your POS to Skaala
+- Export Skaala bookings to your POS
+- Unified reporting across all channels
+
+---
+
+## Best Practices
+
+### For Maximum Bookings
+
+<AccordionGroup>
+  <Accordion title="Keep It Simple">
+    Don't overwhelm customers with too many options. Limit to 3-5 main services with clear descriptions.
+  </Accordion>
+
+  <Accordion title="Flexible Availability">
+    More available slots = more bookings. Consider extended hours or weekend availability.
+  </Accordion>
+
+  <Accordion title="Easy Payment">
+    Offer multiple payment options. Some customers prefer pay-in-person, others want to pay upfront.
+  </Accordion>
+
+  <Accordion title="Clear Pricing">
+    No hidden fees or surprises. AI should state the exact price before booking.
+  </Accordion>
+</AccordionGroup>
+
+### For Smooth Operations
+
+<AccordionGroup>
+  <Accordion title="Buffer Time">
+    Add 10-15 minutes between appointments for cleanup, setup, or running late.
+  </Accordion>
+
+  <Accordion title="Realistic Durations">
+    Don't overbook by underestimating how long services take. Include customer greeting/checkout time.
+  </Accordion>
+
+  <Accordion title="Block Personal Time">
+    Mark lunch breaks, meetings, and personal appointments in your calendar.
+  </Accordion>
+
+  <Accordion title="Regular Review">
+    Weekly review: Which services are popular? Which time slots never book? Adjust accordingly.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting Common Issues
+
+<AccordionGroup>
+  <Accordion title="Customer says payment link didn't work">
+    **Check**: Is their phone number correct? Payment link sent via SMS.
+
+    **Solution**: Resend link from booking details, or send via email instead.
+  </Accordion>
+
+  <Accordion title="Double-booking happened">
+    **Cause**: Usually external calendar not syncing properly.
+
+    **Solution**: Re-authorize calendar connection in Settings → Integrations.
+  </Accordion>
+
+  <Accordion title="Refund not showing up for customer">
+    **Timeline**: Refunds take 5-10 business days to appear.
+
+    **Check**: Look in Stripe dashboard to confirm refund was processed.
+  </Accordion>
+
+  <Accordion title="AI offering wrong prices">
+    **Check**: Service pricing in Settings → Services.
+
+    **Solution**: Update prices, AI uses latest info immediately.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card title="Payment Setup Support" icon="headset" href="https://www.skaala.ai/en/contact">
+    Get help connecting Stripe or troubleshooting payments
+  </Card>
+  <Card title="API Documentation" icon="code" href="/api-reference/bookings/create-bookings">
+    Technical details for custom booking integrations
+  </Card>
+</CardGroup>

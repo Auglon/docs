@@ -123,10 +123,16 @@
       ]
     },
     {
+      "group": "User Guides",
+      "pages": [
+        "guides/getting-started-guide",
+        "guides/dashboard-overview",
+        "guides/bookings-and-payments"
+      ]
+    },
+    {
       "group": "Integrations",
       "pages": [
-        "integrations/elevenlabs",
-        "integrations/twilio",
         "integrations/stripe",
         "integrations/zapier"
       ]
