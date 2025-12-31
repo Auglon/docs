@@ -16,14 +16,14 @@
       "light": "#F6F6E4"
     }
   },
-  "topbarCtaButton": {
-    "type": "github",
-    "url": "https://github.com/skaala-ai"
-  },
   "topbarLinks": [
     {
-      "name": "Get API Key",
-      "url": "https://www.skaala.ai/dashboard/settings/api-keys"
+      "name": "Dashboard",
+      "url": "https://www.skaala.ai/dashboard"
+    },
+    {
+      "name": "Contact",
+      "url": "https://www.skaala.ai/en/contact"
     }
   ],
   "tabs": [
@@ -133,9 +133,8 @@
     }
   ],
   "footerSocials": {
-    "github": "https://github.com/skaala-ai",
-    "twitter": "https://twitter.com/skaala_ai",
-    "linkedin": "https://www.linkedin.com/company/skaala-ai"
+    "x": "https://x.com/SkaalaAi",
+    "linkedin": "https://www.linkedin.com/company/aicall-ab"
   },
   "feedback": {
     "thumbsRating": true,
